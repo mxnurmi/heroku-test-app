@@ -1,5 +1,20 @@
 const express = require('express')
 const app = express()
+const mongoose = require('mongoose')
+
+const password = OYGF857Md5kjz3Y5 //remove!
+const url =
+  `mongodb+srv://fullstack_mn:${password}@cluster0-sylwk.mongodb.net/note-app?retryWrites=true&w=majority`
+
+mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
+
+const noteSchema = new mongoose.Schema({
+  content: String,
+  date: Date,
+  important: Boolean,
+})
+
+const Note = mongoose.model('Note', noteSchema)
 
 app.use(express.json())
 app.use(express.static('build'))
@@ -44,7 +59,9 @@ app.get('/', (req, res) => {
 })
 
 app.get('/api/notes', (req, res) => {
-  res.json(notes)
+  Note.find({}).then(notes => {
+    res.json(notes)
+  })
 })
 
 const generateId = () => {
