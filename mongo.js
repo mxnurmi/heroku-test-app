@@ -5,11 +5,6 @@ if (process.argv.length<3) {
   process.exit(1)
 }
 
-const password = process.argv[2]
-
-const url =
-  `mongodb+srv://fullstack_mn:${password}@cluster0-sylwk.mongodb.net/note-app?retryWrites=true&w=majority`
-
 mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
 
 const noteSchema = new mongoose.Schema({
